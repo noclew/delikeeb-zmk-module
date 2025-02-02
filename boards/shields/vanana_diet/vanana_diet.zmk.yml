@@ -1,0 +1,10 @@
+file_format: "1"
+id: vanana_diet
+name: Vanana Diet
+type: shield
+url: TBA
+requires: [nice_nano]
+exposes: [spi_cirque]
+features:
+  - keys
+  - displaypointer 
