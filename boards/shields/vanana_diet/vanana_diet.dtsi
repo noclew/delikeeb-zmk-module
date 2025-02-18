@@ -10,7 +10,7 @@
     pinctrl-1 = <&spi3_sleep>;
     pinctrl-names = "default", "sleep";
 
-    cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>, <&gpio0 24 GPIO_ACTIVE_LOW>;
+    cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>, <&gpio0 24 GPIO_ACTIVE_LOW>,  <&gpio0 8 GPIO_ACTIVE_HIGH>;
     
     shifter: 595@0 {
         compatible = "zmk,gpio-595";
@@ -33,6 +33,17 @@
         sleep;
         no-taps;
     };
+
+    ls0xx: ls0xx@2 {
+        status = "okay";
+		compatible = "sharp,ls0xx";
+        label = "DISPLAY";
+		spi-max-frequency = <2000000>;
+		reg = <2>;
+            width = <144>;
+            height = <168>;
+		// disp-en-gpios = <&gpio0 23 GPIO_ACTIVE_HIGH>;
+	};
 };
 
 / {
@@ -40,5 +51,12 @@
         compatible = "zmk,input-listener";
         device = <&glidepoint>;
 		status = "okay";
+        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>, <&zip_xy_scaler 2 2>;
+
+        scroller {
+            layers = <3>;
+            input-processors = <&zip_xy_to_scroll_mapper>;
+            process-next;
+        };
     };
 };

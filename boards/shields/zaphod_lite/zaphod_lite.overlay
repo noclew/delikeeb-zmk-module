@@ -1,8 +1,45 @@
-#include "vanana_diet.dtsi"
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <dt-bindings/zmk/matrix_transform.h>
+
+&spi3 {
+	status = "okay";
+    compatible = "nordic,nrf-spim";
+
+    pinctrl-0 = <&spi3_default>;
+    pinctrl-1 = <&spi3_sleep>;
+    pinctrl-names = "default", "sleep";
+	cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>, <&gpio0 8 GPIO_ACTIVE_HIGH>;
+	shifter: 595@0 {
+		compatible = "zmk,gpio-595";
+		status = "okay";
+		gpio-controller;
+		spi-max-frequency = <200000>;
+		reg = <0>;
+		#gpio-cells = <2>;
+		ngpios = <8>;
+	};
+
+	ls0xx: ls0xx@1 {
+		compatible = "sharp,ls0xx";
+		spi-max-frequency = <2000000>;
+		reg = <1>;
+		width = <144>;
+		height = <168>;
+		// disp-en-gpios = <&gpio0 23 GPIO_ACTIVE_HIGH>;
+	};
+
+};
+
+
 
 / {
-	// model = "vanana_diet";
-	// compatible = "dELIKEEb,vanana_diet";
+	model = "zaphod-lite";
+	compatible = "petejohanson,zaphod-lite";
 
 	chosen {
 		zmk,kscan = &kscan;
@@ -52,3 +89,4 @@
 			;
 	};
 };
+

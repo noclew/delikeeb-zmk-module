@@ -10,4 +10,24 @@ config ZMK_POINTING
 config SPI
 	default y
 
-endif
+
+config ZMK_DISPLAY
+	select LV_FONT_MONTSERRAT_28
+
+if ZMK_DISPLAY
+
+config SPI
+	default y
+
+config LS0XX
+	default y
+
+config ZMK_DISPLAY_INVERT
+	default y
+
+endif # ZMK_DISPLAY
+
+
+
+
+endif # SHIELD_VANANA_DIET    
